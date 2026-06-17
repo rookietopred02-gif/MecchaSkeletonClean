@@ -342,7 +342,8 @@ int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE, LPWSTR, int)
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        reader.DrawEsp(ImGui::GetBackgroundDrawList(), io.DisplaySize);
+        reader.DrawEsp(ImGui::GetBackgroundDrawList(), io.DisplaySize,
+            ImVec2(static_cast<float>(lastOverlayRect.left), static_cast<float>(lastOverlayRect.top)));
 
         if (showMenu) {
             ImGui::SetNextWindowPos(ImVec2(16.0f, 16.0f), ImGuiCond_FirstUseEver);
