@@ -26,10 +26,10 @@ namespace Offsets {
     constexpr uintptr_t APlayerCameraManager_CameraCachePrivate = 0x1530;
     constexpr uintptr_t FCameraCacheEntry_POV = 0x10;
 
-    constexpr uintptr_t AActor_PlayerBodyMesh = 0x328;
+    constexpr uintptr_t AActor_PlayerBodyMesh = 0x418;
 
     constexpr uintptr_t USceneComponent_ComponentToWorld = 0x1E0;
-    constexpr uintptr_t USkeletalMeshComponent_CachedComponentSpaceTransforms = 0x9B8;
+    constexpr uintptr_t USkeletalMeshComponent_CachedComponentSpaceTransforms = 0x928;
 }
 
 constexpr double Pi = 3.14159265358979323846;
