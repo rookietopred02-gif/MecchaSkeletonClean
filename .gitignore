@@ -1,0 +1,12 @@
+x64/
+MecchaSkeletonClean/x64/
+*.pdb
+*.exe
+*.obj
+*.log
+*.tlog/
+*.recipe
+*.ilk
+*.ipdb
+*.iobj
+*.idb
