@@ -1,6 +1,6 @@
-# Meccha Box ESP - External Read-Only Overlay (PenguinHotel / MECCHA CHAMELEON)
+# Meccha Box ESP - External Cheat Overlay (PenguinHotel / MECCHA CHAMELEON)
 
-Meccha Box ESP is a highly optimized, completely safe, external read-only Direct3D 11 & ImGui overlay tailored for MECCHA CHAMELEON (running on Unreal Engine 5 as `PenguinHotel-Win64-Shipping.exe`).
+Meccha Box ESP is a highly optimized, external Direct3D 11 & ImGui cheat overlay tailored for MECCHA CHAMELEON (running on Unreal Engine 5 as `PenguinHotel-Win64-Shipping.exe`).
 
 ## Features
 - **Clean External D3D11 Overlay**: Completely standalone process, rendering via a high-performance transparent window overlay.
@@ -9,7 +9,7 @@ Meccha Box ESP is a highly optimized, completely safe, external read-only Direct
 - **Stable Foot Anchor Anchor ESP**: Uses the most stable bone (Index 0 from `CachedComponentSpaceTransforms + 0x928`) on the `Actor + 0x418` body mesh to identify the player's exact bottom-center anchor.
 - **Accurate 2D Bounding Boxes**: Computes precise head projections dynamically scaled with world heights, giving beautifully fitting box coordinates without relying on fragile skeletal connections.
 - **High-Performance Architecture**: Limitless FPS rendering, dynamic actor frame capping, distance-based culling, and camera POV manager cache projection.
-- **Completely Safe & Read-Only**: Absolutely zero writes, code injection, or hooking into the game memory space. Excellent stream/screenshot safety characteristics.
+- **External Memory Access**: Designed to interact externally with the game process, providing a robust foundation for memory reading and future writing implementations.
 
 ## Offsets Summary (UE5 Double-based)
 

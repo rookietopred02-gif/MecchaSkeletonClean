@@ -270,6 +270,17 @@ bool MecchaReader::ReadMemory(uintptr_t address, void* out, size_t size) const
         && bytesRead == size;
 }
 
+bool MecchaReader::WriteMemory(uintptr_t address, const void* buffer, size_t size) const
+{
+    if (!process_ || !IsReadablePointer(address)) {
+        return false;
+    }
+
+    SIZE_T bytesWritten = 0;
+    return WriteProcessMemory(process_, reinterpret_cast<LPVOID>(address), buffer, size, &bytesWritten) != 0
+        && bytesWritten == size;
+}
+
 bool MecchaReader::TryAttachProcess(const wchar_t* processName)
 {
     PROCESSENTRY32W entry{};
@@ -296,9 +307,9 @@ bool MecchaReader::TryAttachProcess(const wchar_t* processName)
         return false;
     }
 
-    HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, FALSE, pid);
+    HANDLE process = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
     if (!process) {
-        SetStatus("OpenProcess read-only failed (%lu)", GetLastError());
+        SetStatus("OpenProcess failed (%lu)", GetLastError());
         return false;
     }
 
@@ -334,7 +345,7 @@ bool MecchaReader::TryAttachProcess(const wchar_t* processName)
     pid_ = pid;
     moduleBase_ = moduleBase;
     moduleSize_ = moduleSize;
-    SetStatus("Attached read-only: PID %lu, base 0x%llX", pid_, static_cast<unsigned long long>(moduleBase_));
+    SetStatus("Attached: PID %lu, base 0x%llX", pid_, static_cast<unsigned long long>(moduleBase_));
     return true;
 }
 
@@ -375,12 +386,12 @@ void MecchaReader::DrawControls()
     ImGui::Separator();
 
     if (!IsAttached()) {
-        if (ImGui::Button("Attach read-only", ImVec2(-1, 24))) {
+        if (ImGui::Button("Attach to game", ImVec2(-1, 24))) {
             Attach();
         }
     }
     else {
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "Attached read-only");
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "Attached");
         ImGui::Text("PID: %lu", pid_);
         ImGui::Text("Base: 0x%llX", static_cast<unsigned long long>(moduleBase_));
         if (ImGui::Button("Detach", ImVec2(-1, 24))) {

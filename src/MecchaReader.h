@@ -55,5 +55,6 @@ private:
 
     bool TryAttachProcess(const wchar_t* processName);
     bool ReadMemory(uintptr_t address, void* out, size_t size) const;
+    bool WriteMemory(uintptr_t address, const void* buffer, size_t size) const;
     void SetStatus(const char* fmt, ...);
 };
