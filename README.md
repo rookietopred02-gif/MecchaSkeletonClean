@@ -3,7 +3,9 @@
 Meccha Box ESP is a highly optimized, completely safe, external read-only Direct3D 11 & ImGui overlay tailored for MECCHA CHAMELEON (running on Unreal Engine 5 as `PenguinHotel-Win64-Shipping.exe`).
 
 ## Features
-- **Clean External D3D11 Overlay**: Completely standalone process, rendering via a high-performance transparent window overlay. Supports toggling the interface cleanly using the `INSERT` key.
+- **Clean External D3D11 Overlay**: Completely standalone process, rendering via a high-performance transparent window overlay.
+  - Press the **`INSERT`** key to toggle the cheat menu UI.
+  - Press the **`F5`** key to instantly kill/close the cheat process (Panic switch).
 - **Stable Foot Anchor Anchor ESP**: Uses the most stable bone (Index 0 from `CachedComponentSpaceTransforms + 0x928`) on the `Actor + 0x418` body mesh to identify the player's exact bottom-center anchor.
 - **Accurate 2D Bounding Boxes**: Computes precise head projections dynamically scaled with world heights, giving beautifully fitting box coordinates without relying on fragile skeletal connections.
 - **High-Performance Architecture**: Limitless FPS rendering, dynamic actor frame capping, distance-based culling, and camera POV manager cache projection.
@@ -39,11 +41,14 @@ Meccha Box ESP is a highly optimized, completely safe, external read-only Direct
 - **Visual Studio 2022** (v143 Toolset)
 - **DirectX 11 SDK** (standard on Windows SDK)
 
-### Compile Instructions
+### Compile and Run Instructions
 1. Open `MecchaSkeletonClean.vcxproj` in Visual Studio 2022.
 2. Select target configuration: **Release \| x64** or **Debug \| x64**.
 3. Rebuild the solution. 
 4. The executable will compile to `x64/Release/MecchaSkeletonClean.exe` or `x64/Debug/MecchaSkeletonClean.exe`.
+5. Run the compiled overlay executable alongside the game.
+   - Press **`INSERT`** to toggle the cheat menu.
+   - Press **`F5`** to kill the cheat process instantly.
 
 ## License
 This project is intended strictly for educational, security analysis, and academic research purposes only. Avoid using this implementation in environments where security or competitive integrity is actively enforced.
