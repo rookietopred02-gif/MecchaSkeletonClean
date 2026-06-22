@@ -14,10 +14,12 @@
     *   `CachedBoneSpaceTransforms` 偏移：`+0x9A8`
 *   **FTransform 佈局確認**：確認 UE5 採用雙精度（Double-based）的 `FTransform` 結構，總大小為 `0x60`：
     *   `Rotation` (四元數 `FQuat`): `double * 4` (位於 `0x00` ~ `0x1F`)
-    *   `Translation` (三維向量 `FVector`): `double * 3` (位於 `0x20` ~ `0x37`) —— **特別注意：其後無任何 Padding，緊接著就是 Scale3D！**
-    *   `Scale3D` (三維向量 `FVector`): `double * 3` (位於 `0x38` ~ `0x4F`)
-    *   `Padding` (結構末尾對齊): `16` bytes 的 Padding (位於 `0x50` ~ `0x5F`) 用於對齊 `alignas(16)` 的 struct 邊界。
-    *   *技術與 Bug 修正說明*：先前版本不慎在 `Translation` 與 `Scale3D` 之間塞入了 `Pad0`（認為 `Translation` 需 32-byte 對齊），導致 `Scale3D` 的讀取偏移錯誤。由於骨骼點 0 (Root) 的本地 Translation 通常為 `(0, 0, 0)`，因此其計算結果不受 `Scale3D` 錯誤的影響，始終完美對齊玩家腳底；然而其他所有非零骨骼點（如頭部、手臂、軀幹等）在乘以錯誤的 `Scale3D` 後，便會被未定義的記憶體或 Garbage Data 放大數萬倍，引發「骨架點與骨線飛天、拉扯走樣，而腳底 Root 點卻異常精準」的奇特現象。在移除該中間 Padding，並將 Padding 整合至結尾後，全體骨骼已完全校正歸位！
+    *   `Translation` (三維向量 `FVector`): `double * 3` (位於 `0x20` ~ `0x37`)
+    *   `Pad0` (對齊填充): `8` bytes (位於 `0x38` ~ `0x3F`) —— **此 Pad0 為必要！** UE5 的 `FTransform` 為 `alignas(16)`，`Scale3D` 必須對齊到 16-byte 邊界，因此 `Translation` (結束於 `0x37`) 之後需補 8 bytes，`Scale3D` 才落在 `0x40`。
+    *   `Scale3D` (三維向量 `FVector`): `double * 3` (位於 `0x40` ~ `0x57`)
+    *   `Pad1` (結構末尾對齊): `8` bytes 的 Padding (位於 `0x58` ~ `0x5F`) 用於補足 `alignas(16)` 的 struct 邊界至 `0x60`。
+    *   *單一事實來源 (Source of Truth)*：上述佈局以 [`src/EspTypes.hpp`](src/EspTypes.hpp) 的 `Transformd` 結構為準，並由 `static_assert(offsetof(Transformd, Scale3D) == 0x40)` 等編譯期斷言強制驗證——若有疑義以程式碼為準。
+    *   *Bug 歷史更正*：本報告早期版本曾誤記為「移除 Translation 與 Scale3D 之間的 Pad0、Scale3D 位於 `0x38`」。該描述與實際可運作的程式碼及 UE5 `alignas(16)` 佈局相矛盾，已更正如上。正確結論是 **Pad0 必須保留**；缺少它會讓所有非零骨骼點（頭、手、軀幹）乘上錯位的 `Scale3D`（讀到 garbage data 而被放大數萬倍），出現「骨架飛天、唯獨腳底 Root 點精準」的現象，因為 Root 的本地 Translation 通常為 `(0,0,0)`，不受 `Scale3D` 錯誤影響。
     *   *技術影響*：此結構直接決定了骨骼點的旋轉、平移與縮放計算方式，不適用於舊版 UE4 單精度（Float-based）的計算邏輯。
 *   **ComponentToWorld 驗證**：因為 `ComponentToWorld` 是 UE 的 Native 欄位，未顯示在 UPROPERTY 列表中。隨後透過 IDA Headless 反組譯分析 `K2_GetComponentToWorld` 函數特徵，確認了變換複製邏輯。
 
