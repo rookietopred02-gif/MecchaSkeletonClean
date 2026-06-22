@@ -86,6 +86,10 @@
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MecchaReader.cpp" />
+    <ClCompile Include="src\MecchaReader_Config.cpp" />
+    <ClCompile Include="src\MecchaReader_Esp.cpp" />
+    <ClCompile Include="src\MecchaReader_Hacks.cpp" />
+    <ClCompile Include="src\MecchaReader_Ui.cpp" />
     <ClCompile Include="third_party\imgui\imgui.cpp" />
     <ClCompile Include="third_party\imgui\imgui_draw.cpp" />
     <ClCompile Include="third_party\imgui\imgui_tables.cpp" />
@@ -94,7 +98,9 @@
     <ClCompile Include="third_party\imgui\backends\imgui_impl_win32.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EspTypes.hpp" />
     <ClInclude Include="src\MecchaReader.h" />
+    <ClInclude Include="src\Offsets.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

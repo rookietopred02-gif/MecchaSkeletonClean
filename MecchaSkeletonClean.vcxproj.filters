@@ -20,6 +20,18 @@
     <ClCompile Include="src\MecchaReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MecchaReader_Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MecchaReader_Esp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MecchaReader_Hacks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MecchaReader_Ui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="third_party\imgui\imgui.cpp">
       <Filter>Third Party\ImGui</Filter>
     </ClCompile>
@@ -40,7 +52,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EspTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\MecchaReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Offsets.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
